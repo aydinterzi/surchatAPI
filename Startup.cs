@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using surchatAPI.Data;
 using surchatAPI.Models;
+using surchatAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace surchatAPI
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowOrigins = "_myAllowOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,6 +37,18 @@ namespace surchatAPI
             services.AddDbContext<SurchatContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DataContextConnectionString")));
             services.AddIdentity<User, Role>().AddEntityFrameworkStores<SurchatContext>();
             services.AddControllers();
+            services.AddCors(options => {
+                options.AddPolicy(
+                    name: MyAllowOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+
+
+                    });
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "surchatAPI", Version = "v1" });
@@ -56,6 +70,7 @@ namespace surchatAPI
                         ValidateAudience = false
                     };
                 });
+            services.AddScoped<SurveyData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +86,7 @@ namespace surchatAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(MyAllowOrigins);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
