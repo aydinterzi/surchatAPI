@@ -19,12 +19,21 @@ namespace surchatAPI.Services
 
         public async Task CreateSurvey(SurveyForCreateDTO model)
         {
-            Surveys survey = new Surveys();
-            survey.Time = model.Time;
-            survey.Title = model.Title;
-            survey.UserId = model.userId;
+            Surveys survey = new Surveys() {
+                Time = model.Time,
+                Title = model.Title,
+                UserId = model.userId,
+                Code = new Random().Next(100000,999999),
+                IsOpen=false,
+            };
             await _surchatContext.Survey.AddAsync(survey);
             await _surchatContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Surveys>> GetSurveys()
+        {
+           return await _surchatContext.Survey.ToListAsync();
+           
         }
     }
 }

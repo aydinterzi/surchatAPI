@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using surchatAPI.DTO;
+using surchatAPI.Models;
 using surchatAPI.Services;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,12 @@ namespace surchatAPI.Controllers
         {
           await  _surveyData.CreateSurvey(model);
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<List<Surveys>> GetSurveys()
+        {
+            return await _surveyData.GetSurveys();
         }
     }
 }
