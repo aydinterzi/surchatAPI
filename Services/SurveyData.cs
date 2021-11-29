@@ -19,12 +19,13 @@ namespace surchatAPI.Services
 
         public async Task CreateSurvey(SurveyForCreateDTO model)
         {
-            Surveys survey = new Surveys() {
+            Surveys survey = new Surveys()
+            {
                 Time = model.Time,
                 Title = model.Title,
                 UserId = model.userId,
-                Code = new Random().Next(100000,999999),
-                IsOpen=false,
+                Code = model.Code,
+                IsOpen = false,
             };
             await _surchatContext.Survey.AddAsync(survey);
             await _surchatContext.SaveChangesAsync();
@@ -32,8 +33,39 @@ namespace surchatAPI.Services
 
         public async Task<List<Surveys>> GetSurveys()
         {
-           return await _surchatContext.Survey.ToListAsync();
-           
+            return await _surchatContext.Survey.ToListAsync();
+
         }
+
+        public async Task CreateQuestion(QuestionForCreateDTO model)
+        {
+            Surveys survey = _surchatContext.Survey.FirstOrDefault(x => x.Code == model.Code);
+            survey.Questions = new List<Questions>();
+            survey.Questions.Add(new Questions()
+            {
+                Question = model.Question,
+                Options = new List<Options>()
+                {
+                    new Options()
+                    {
+                        Option = "deneme1"
+                    },
+                    new Options()
+                    {
+                        Option="deneme2"
+                    },
+                    new Options()
+                    {
+                        Option="deneme3"
+                    },
+                    new Options()
+                    {
+                        Option="deneme4"
+                    },
+                }
+            });
+            await _surchatContext.SaveChangesAsync();
+        }
+
     }
 }

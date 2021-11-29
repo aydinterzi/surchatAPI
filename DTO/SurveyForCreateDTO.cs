@@ -10,5 +10,6 @@ namespace surchatAPI.DTO
         public int Time { get; set; }
         public string Title { get; set; }
         public int userId { get; set; }
+        public int Code { get; set; }
     }
 }

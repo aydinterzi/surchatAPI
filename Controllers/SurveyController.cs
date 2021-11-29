@@ -33,5 +33,12 @@ namespace surchatAPI.Controllers
         {
             return await _surveyData.GetSurveys();
         }
+
+        [HttpPost("createquestion")]
+        public async Task<IActionResult> CreateQuestion(QuestionForCreateDTO model)
+        {
+            await _surveyData.CreateQuestion(model);
+            return Ok();
+        }
     }
 }

@@ -10,7 +10,7 @@ using surchatAPI.Data;
 namespace surchatAPI.Migrations
 {
     [DbContext(typeof(SurchatContext))]
-    [Migration("20211101203451_InitialCreate")]
+    [Migration("20211126114339_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
