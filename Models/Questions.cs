@@ -7,6 +7,10 @@ namespace surchatAPI.Models
 {
     public class Questions
     {
+        //public Questions()
+        //{
+        //    Options = new List<Options>();
+        //}
         public int Id { get; set; }
         public string Question { get; set; }
 
@@ -14,6 +18,6 @@ namespace surchatAPI.Models
         public int SurveyId { get; set; }
         public Surveys Survey  { get; set; }
 
-        public ICollection<Options> Options { get; set; }
+        public List<Options> Options { get; set; }
     }
 }

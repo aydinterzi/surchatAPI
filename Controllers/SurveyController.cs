@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using surchatAPI.DTO;
 using surchatAPI.Models;
@@ -20,14 +21,14 @@ namespace surchatAPI.Controllers
             _surveyData = surveyData;
         }
 
-
+        
         [HttpPost("createsurvey")]
         public async Task<IActionResult> CreateSurvey(SurveyForCreateDTO model)
         {
-          await  _surveyData.CreateSurvey(model);
+            await _surveyData.CreateSurvey(model);
             return Ok();
         }
-
+        
         [HttpGet]
         public async Task<List<Surveys>> GetSurveys()
         {
@@ -39,6 +40,13 @@ namespace surchatAPI.Controllers
         {
             await _surveyData.CreateQuestion(model);
             return Ok();
+        }
+
+        [HttpGet("getsurvey/{code}")]
+        public async Task<Surveys> Getsurvey(int code)
+        {
+            return await _surveyData.GetSurvey(code);
+              
         }
     }
 }

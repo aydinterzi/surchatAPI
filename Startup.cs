@@ -36,7 +36,10 @@ namespace surchatAPI
         {
             services.AddDbContext<SurchatContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DataContextConnectionString")));
             services.AddIdentity<User, Role>().AddEntityFrameworkStores<SurchatContext>();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddCors(options => {
                 options.AddPolicy(
                     name: MyAllowOrigins,
