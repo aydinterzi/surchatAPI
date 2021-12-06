@@ -31,9 +31,9 @@ namespace surchatAPI.Services
             await _surchatContext.SaveChangesAsync();
         }
        
-        public async Task<List<Surveys>> GetSurveys()
+        public async Task<List<Surveys>> GetSurveys(int userId)
         {
-            return await _surchatContext.Survey.Include(i=>i.Questions).ThenInclude(i=>i.Options).ToListAsync();
+            return await _surchatContext.Survey.Where(i=>i.UserId==userId).Include(i=>i.Questions).ThenInclude(i=>i.Options).ToListAsync();
 
         }
         public async Task<Surveys> GetSurvey(int code)
@@ -46,7 +46,7 @@ namespace surchatAPI.Services
         public async Task CreateQuestion(QuestionForCreateDTO model)
         {
             Surveys survey = _surchatContext.Survey.FirstOrDefault(x => x.Code == model.Code);
-            //survey.Questions = new List<Questions>();
+            survey.Questions = new List<Questions>();
             survey.Questions.Add(new Questions()
             {
                 Question = model.Question,
@@ -54,19 +54,19 @@ namespace surchatAPI.Services
                 {
                     new Options()
                     {
-                        Option = "deneme1"
+                        Option =model.Option1
                     },
                     new Options()
                     {
-                        Option="deneme2"
+                        Option=model.Option2
                     },
                     new Options()
                     {
-                        Option="deneme3"
+                        Option=model.Option3
                     },
                     new Options()
                     {
-                        Option="deneme4"
+                        Option=model.Option4
                     },
                 }
             });

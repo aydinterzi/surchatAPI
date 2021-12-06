@@ -29,10 +29,10 @@ namespace surchatAPI.Controllers
             return Ok();
         }
         
-        [HttpGet]
-        public async Task<List<Surveys>> GetSurveys()
+        [HttpGet("{userId}")]
+        public async Task<List<Surveys>> GetSurveys(int userId)
         {
-            return await _surveyData.GetSurveys();
+            return await _surveyData.GetSurveys(userId);
         }
 
         [HttpPost("createquestion")]
