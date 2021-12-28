@@ -73,5 +73,19 @@ namespace surchatAPI.Services
             await _surchatContext.SaveChangesAsync();
         }
 
+        public async Task AnswerSurvey(UserAnswersDTO userAnswersDTO)
+        {
+           for(int i=0;i<userAnswersDTO.QuestionsId.Count;i++)
+            {
+                await _surchatContext.AddAsync(new UserAnswers {
+                    UserId=userAnswersDTO.UserId,
+                    QuestionsId=userAnswersDTO.QuestionsId[i],
+                    Answers=userAnswersDTO.AnswersId[i]
+                });
+            }
+            await _surchatContext.SaveChangesAsync();
+
+        }
+
     }
 }

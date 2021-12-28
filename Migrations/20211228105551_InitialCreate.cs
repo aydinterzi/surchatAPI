@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace surchatAPI.Migrations
 {
     public partial class InitialCreate : Migration
@@ -55,8 +57,8 @@ namespace surchatAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AnswerId = table.Column<int>(type: "int", nullable: false),
+                    Answers = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionsId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

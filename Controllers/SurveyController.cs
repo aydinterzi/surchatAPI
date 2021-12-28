@@ -48,5 +48,11 @@ namespace surchatAPI.Controllers
             return await _surveyData.GetSurvey(code);
               
         }
+        [HttpPost("answersurvey")]
+        public async Task<IActionResult> AnswerSurvey(UserAnswersDTO userAnswers)
+        {
+            await _surveyData.AnswerSurvey(userAnswers);
+            return Ok();
+        }
     }
 }

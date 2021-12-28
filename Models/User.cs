@@ -9,6 +9,6 @@ namespace surchatAPI.Models
     public class User:IdentityUser<int>
     {
         public int ConnectionId { get; set; }
-        public ICollection<Surveys> Surveys { get; set; }
+        public List<Surveys> Surveys { get; set; }
     }
 }
