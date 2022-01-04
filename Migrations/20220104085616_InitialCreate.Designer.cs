@@ -12,7 +12,7 @@ using surchatAPI.Data;
 namespace surchatAPI.Migrations
 {
     [DbContext(typeof(SurchatContext))]
-    [Migration("20211228105551_InitialCreate")]
+    [Migration("20220104085616_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -319,6 +319,8 @@ namespace surchatAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("QuestionsId");
+
                     b.ToTable("UserAnswer");
                 });
 
@@ -406,9 +408,20 @@ namespace surchatAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("surchatAPI.Models.UserAnswers", b =>
+                {
+                    b.HasOne("surchatAPI.Models.Questions", null)
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("QuestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("surchatAPI.Models.Questions", b =>
                 {
                     b.Navigation("Options");
+
+                    b.Navigation("UserAnswers");
                 });
 
             modelBuilder.Entity("surchatAPI.Models.Surveys", b =>

@@ -90,6 +90,7 @@ namespace surchatAPI
 
             app.UseRouting();
             app.UseCors(MyAllowOrigins);
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

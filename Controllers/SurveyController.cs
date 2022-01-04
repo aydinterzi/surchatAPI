@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace surchatAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+   
     public class SurveyController : ControllerBase
     {
         private readonly SurveyData _surveyData;
@@ -40,6 +42,7 @@ namespace surchatAPI.Controllers
         {
             await _surveyData.CreateQuestion(model);
             return Ok();
+            
         }
 
         [HttpGet("getsurvey/{code}")]
@@ -48,11 +51,19 @@ namespace surchatAPI.Controllers
             return await _surveyData.GetSurvey(code);
               
         }
+
         [HttpPost("answersurvey")]
         public async Task<IActionResult> AnswerSurvey(UserAnswersDTO userAnswers)
         {
             await _surveyData.AnswerSurvey(userAnswers);
             return Ok();
+        }
+
+        [HttpGet("result/{code}")]
+        public async Task<Surveys> GetResults(int code)
+        {
+            return await _surveyData.GetResults(code);
+
         }
     }
 }

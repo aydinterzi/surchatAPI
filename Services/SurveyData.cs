@@ -87,5 +87,17 @@ namespace surchatAPI.Services
 
         }
 
+
+        //public async Task<Surveys> GetResults(int code)
+        //{
+        //    var surveys = await _surchatContext.Survey.Include(i => i.Questions).ThenInclude(i => i.UserAnswers).FirstOrDefaultAsync();
+        //    string[][] arr = new string[surveys.Questions.Count][];
+        //    for (int i = 0; i < surveys.Questions.Count; i++)
+        //    {
+               
+        //    }
+        //    return surveys;
+        //}
+
     }
 }

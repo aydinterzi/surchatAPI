@@ -19,5 +19,6 @@ namespace surchatAPI.Models
         public Surveys Survey  { get; set; }
 
         public List<Options> Options { get; set; }
+        public List<UserAnswers> UserAnswers { get; set; }
     }
 }
