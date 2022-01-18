@@ -45,30 +45,21 @@ namespace surchatAPI.Services
 
         public async Task CreateQuestion(QuestionForCreateDTO model)
         {
+            var options = new List<Options>();
+            for (int i = 0; i < model.Options.Count; i++)
+            {
+                options.Add(new Options
+                {
+                    Option = model.Options[i].Option
+                });
+            }
+            
             Surveys survey = _surchatContext.Survey.FirstOrDefault(x => x.Code == model.Code);
             survey.Questions = new List<Questions>();
             survey.Questions.Add(new Questions()
             {
                 Question = model.Question,
-                Options = new List<Options>()
-                {
-                    new Options()
-                    {
-                        Option =model.Option1
-                    },
-                    new Options()
-                    {
-                        Option=model.Option2
-                    },
-                    new Options()
-                    {
-                        Option=model.Option3
-                    },
-                    new Options()
-                    {
-                        Option=model.Option4
-                    },
-                }
+                Options = options,
             });
             await _surchatContext.SaveChangesAsync();
         }

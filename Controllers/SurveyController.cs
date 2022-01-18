@@ -59,11 +59,11 @@ namespace surchatAPI.Controllers
             return Ok();
         }
 
-        [HttpGet("result/{code}")]
-        public async Task<Surveys> GetResults(int code)
-        {
-            return await _surveyData.GetResults(code);
+        //[HttpGet("result/{code}")]
+        //public async Task<Surveys> GetResults(int code)
+        //{
+        //    //return await _surveyData.GetResults(code);
 
-        }
+        //}
     }
 }
