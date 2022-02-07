@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace surchatAPI.Controllers
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
-   
+
     public class SurveyController : ControllerBase
     {
         private readonly SurveyData _surveyData;
@@ -23,14 +23,14 @@ namespace surchatAPI.Controllers
             _surveyData = surveyData;
         }
 
-        
+
         [HttpPost("createsurvey")]
         public async Task<IActionResult> CreateSurvey(SurveyForCreateDTO model)
         {
             await _surveyData.CreateSurvey(model);
             return Ok();
         }
-        
+
         [HttpGet("{userId}")]
         public async Task<List<Surveys>> GetSurveys(int userId)
         {
@@ -42,14 +42,14 @@ namespace surchatAPI.Controllers
         {
             await _surveyData.CreateQuestion(model);
             return Ok();
-            
+
         }
 
         [HttpGet("getsurvey/{code}")]
         public async Task<Surveys> Getsurvey(int code)
         {
             return await _surveyData.GetSurvey(code);
-              
+
         }
 
         [HttpPost("answersurvey")]
@@ -59,11 +59,16 @@ namespace surchatAPI.Controllers
             return Ok();
         }
 
-        //[HttpGet("result/{code}")]
-        //public async Task<Surveys> GetResults(int code)
-        //{
-        //    //return await _surveyData.GetResults(code);
+        [HttpGet("result/{code}")]
+        public async Task<Surveys> GetResults(int code)
+        {
+            return await _surveyData.GetResults(code);
 
-        //}
+        }
+        [HttpGet]
+        public async Task<string> Deneme()
+        {
+            return "deneme";
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace surchatAPI.Services
                 await _surchatContext.AddAsync(new UserAnswers {
                     UserId=userAnswersDTO.UserId,
                     QuestionsId=userAnswersDTO.QuestionsId[i],
-                    Answers=userAnswersDTO.AnswersId[i]
+                    Answers=userAnswersDTO.Answers[i]
                 });
             }
             await _surchatContext.SaveChangesAsync();
@@ -79,16 +79,12 @@ namespace surchatAPI.Services
         }
 
 
-        //public async Task<Surveys> GetResults(int code)
-        //{
-        //    var surveys = await _surchatContext.Survey.Include(i => i.Questions).ThenInclude(i => i.UserAnswers).FirstOrDefaultAsync();
-        //    string[][] arr = new string[surveys.Questions.Count][];
-        //    for (int i = 0; i < surveys.Questions.Count; i++)
-        //    {
-               
-        //    }
-        //    return surveys;
-        //}
+        public async Task<Surveys> GetResults(int code)
+        {
+            var surveys = await _surchatContext.Survey.Include(i => i.Questions).ThenInclude(i => i.UserAnswers).Where(i => i.Code == code).FirstOrDefaultAsync();
+
+            return surveys;
+        }
 
     }
 }
