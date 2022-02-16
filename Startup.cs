@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using surchatAPI.Data;
+using surchatAPI.Hubs;
 using surchatAPI.Models;
 using surchatAPI.Services;
 using System;
@@ -40,18 +41,14 @@ namespace surchatAPI
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-            services.AddCors(options => {
-                options.AddPolicy(
-                    name: MyAllowOrigins,
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
 
-
-                    });
-            });
+            services.AddSignalR().AddMessagePackProtocol();
+            services.AddCors(options => options.AddDefaultPolicy(builder => 
+                    builder.AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials()
+                           .SetIsOriginAllowed(origin => true)
+                ));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "surchatAPI", Version = "v1" });
@@ -89,13 +86,14 @@ namespace surchatAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(MyAllowOrigins);
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/signalr");
             });
         }
     }
