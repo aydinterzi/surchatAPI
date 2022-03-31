@@ -65,10 +65,11 @@ namespace surchatAPI.Controllers
             return await _surveyData.GetResults(code);
 
         }
-        [HttpGet]
-        public async Task<string> Deneme()
+        [HttpDelete("{code}")]
+        public async Task DeleteSurvey(int code)
         {
-            return "deneme";
+            await _surveyData.DeleteSurvey(code);
         }
+        
     }
 }

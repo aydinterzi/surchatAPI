@@ -86,5 +86,12 @@ namespace surchatAPI.Services
             return surveys;
         }
 
+        public async Task DeleteSurvey(int code)
+        {
+            var survey = await _surchatContext.Survey.FirstOrDefaultAsync(s => s.Code == code);
+            _surchatContext.Survey.Remove(survey);
+            await _surchatContext.SaveChangesAsync();
+        }
+
     }
 }
