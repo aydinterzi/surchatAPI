@@ -68,7 +68,7 @@ namespace surchatAPI.Services
         {
            for(int i=0;i<userAnswersDTO.QuestionsId.Count;i++)
             {
-                await _surchatContext.AddAsync(new UserAnswers {
+                await _surchatContext.UserAnswer.AddAsync(new UserAnswers {
                     UserId=userAnswersDTO.UserId,
                     QuestionsId=userAnswersDTO.QuestionsId[i],
                     Answers=userAnswersDTO.Answers[i]
